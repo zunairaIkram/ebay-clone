@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        /* Topmost Bar */
+        .top-bar {
+            background-color: white;
+            padding: 8px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .top-bar .left-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .left-links a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .left-links a:hover {
+            color: #0059b3;
+        }
+
+        .top-bar .right-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .right-links a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .right-links a:hover {
+            color: #0059b3;
+        }
+        
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar .logo img {
+            height: 45px;
+            margin-right: 10px;
+        }
+
+        .search-bar-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar-wrapper a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            margin-right: 0px;
+            max-width: 70px;
+            word-break: break-word;
+            text-align: center;
+        }
+
+        .search-bar {
+            display: flex;
+            width: 820px;
+            border: 2px solid black;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-left: 12px;
+        }
+
+        .search-bar select {
+            border: none;
+            background-color: white;
+            padding: 8px;
+            font-size: 16px;
+            color: #666;
+            border-left: 1px solid #666;
+            cursor: pointer;
+            margin-right: 12px;
+        }
+
+        .search-bar input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+        }
+
+        .button {
+            padding: 8px 16px; 
+            font-size: 18px; 
+            background-color: #3665f3; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 50px; 
+            outline: none; 
+            margin-left: 12px;
+            width: 150px; 
+            text-align: center; 
+        }
+
+        .button:active,
+        .button:focus {
+            outline: none; 
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #0059b3;
+        }
+
+        .breadcrumb {
+            margin: 15px 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            margin-left: 10px;
+            color: black;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #333;
+        }
+
+        .breadcrumb span {
+            margin-left: 10px;
+        }
+
+        /* Product Section */
+        .product-container {
+            display: flex;
+            margin: 20px;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0px 20px;
+        }
+
+        /* Left Sidebar for Thumbnails */
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        .product-gallery img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border 0.3s ease;
+        }
+
+        .product-gallery img:hover {
+            border: 2px solid black;
+        }
+
+        /* Main Product Image */
+        .product-image-container {
+            width: 680px;
+            height: 500px;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .product-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Right Sidebar for Product Details */
+        .product-details {
+            margin-left: 20px;
+            flex: 1;
+        }
+
+        .product-details h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .seller-info {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px 0;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .seller-icon {
+            font-size: 30px;
+            margin-right: 10px;
+            color: #0059b3;
+        }
+
+        .seller-name {
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .seller-rating {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .seller-details {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .price {
+            margin-top: 15px;
+            font-size: 28px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .offer {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .quantity-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-top: 20px;
+        }
+
+        .quantity-label {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .quantity-available {
+            margin-left: 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .quantity-sold {
+            margin-left: 10px;
+            font-size: 16px;
+            color: red;
+        }
+
+        .quantity-box {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        .buttons-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .buy-it-now-button {
+            padding: 20px;
+            font-size: 18px;
+            width: 100%;
+            background-color: #0059b3;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .buy-it-now-button:hover {
+            background-color: #004080;
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: white;
+            color: #0059b3;
+            border: 1px solid #0059b3;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .watchlist-link {
+            display: block;
+            margin-top: 10px;
+            color: #0059b3;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .watchlist-link i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .watchlist-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 55px;
+            background-color: #f9f9f9;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .footer .footer-links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .footer .footer-links a:hover {
+            color: #0059b3;
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .right-links i {
+            font-size: 20px; 
+            margin-right: 0px;
+            margin-left: 15px; 
+        }
+
+        .icon-container i {
+            font-size: 11px; 
+            margin-left: 0px;
+            color: #666; 
+            cursor: pointer;
+        }
+
+        .icon-container i:hover {
+            color: #0059b3;
+        }
+
+        .search-icon i{
+            font-size: 20px; 
+            margin-top: 8px;
+            margin-left: 10px;
+            color: black; 
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-bar">
+        <div class="left-links">
+            <div class="icon-container">
+                <a href="#">Hi Zunaira!</a>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <a href="#">Daily Deals</a>
+            <a href="#">Brand Outlet</a>
+            <a href="#">Gift Cards</a>
+            <a href="#">Help & Contact</a>
+        </div>
+        <div class="right-links">
+            <a href="#">Sell</a>
+            <div class="icon-container">
+                <a href="#">Watchlist</a>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="icon-container">
+                <a href="#">MyeBay</a>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <a href="#"><i class="fas fa-bell"></i></a>
+            <a href="#"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <div class="logo">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg"
+            alt="eBay Logo"
+          />
+        </div>
+  
+        <div class="search-bar-wrapper">
+            <a href="#">Shop by Category</a>
+            <i class="fas fa-chevron-down"></i>
+            <div class="search-bar">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" placeholder="Search for anything" />
+                <select class=".search-bar select">
+                    <option>All Categories</option>
+                    <option>Antiques</option>
+                    <option>Art</option>
+                    <option>Books and Magzines</option>
+                </select>
+            </div>
+        </div>
+  
+        <button type="submit" class="button">Search</button>
+        <div class="nav-links">
+          <a href="#">Advanced</a>
+        </div>
+  
+    </div>
+
+    <div class="breadcrumb">
+        <div class="icon-container">
+            <i class="fas fa-chevron-left"></i>
+            <a href="#">Back to previous page</a>
+            <a href="#">Toys & Hobbies</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="#">Collectible Card Games</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="#">CCG Sealed Boxes</a>
+        </div>
+    </div>
+
+    <div class="product-container">
+        <div class="product-gallery">
+            <img src="https://i.ebayimg.com/images/g/ZScAAOSwuzJm057e/s-l960.webp" alt="Thumbnail 1">
+            <img src="https://i.ebayimg.com/images/g/Oa4AAOSwCl5m057d/s-l1600.webp" alt="Thumbnail 2">
+        </div>
+
+        <div class="product-image-container">
+            <img src="https://i.ebayimg.com/images/g/Oa4AAOSwCl5m057d/s-l1600.webp" alt="Product Image">
+        </div>
+
+        <div class="product-details">
+            <h1>STAR WARS UNLIMITED TCG: SHADOWS OF THE GALAXY 2-Player Starter New Sealed</h1>
+
+            <div class="seller-info">
+                <i class="fas fa-user seller-icon"></i>
+                <div>
+                    <span class="seller-name">taylobrownel_0</span>
+                    <span class="seller-rating">(29)</span>
+                    <div class="seller-details">
+                        100% positive | Seller's other items | Contact seller
+                    </div>
+                </div>
+            </div>
+
+            <div class="price">US $16.99</div>
+            <div class="offer">or Best Offer</div>
+
+            <p>Condition: <strong>New/Factory Sealed</strong></p>
+
+            <div class="quantity-section">
+                <span class="quantity-label">Quantity:</span>
+                <div class="quantity-box">1</div>
+                <div class="quantity-available">2 available</div>
+                <div class="quantity-sold">10 sold</div>
+            </div>
+
+            <div class="buttons-row">
+                <button class="buy-it-now-button">Buy It Now</button>
+                <button class="action-button">Add to Cart</button>
+                <button class="action-button">Make Offer</button>
+                <button class="action-button">
+                    <i class="fas fa-heart"></i> Add to Watchlist
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">About eBay</a>
+            <a href="#">Announcements</a>
+            <a href="#">Community</a>
+            <a href="#">Security Center</a>
+            <a href="#">Seller Center</a>
+            <a href="#">Policies</a>
+            <a href="#">Affiliates</a>
+            <a href="#">Help & Contact</a>
+            <a href="#">Site Map</a>
+        </div>
+        <p>Copyright © 1995-2024 eBay Inc. All Rights Reserved. Accessibility, User Agreement, Privacy, Cookies, CA Privacy Notice, Your Privacy Choices, and AdChoice</p>
+    </div>
+
+</body>
+
+</html>
