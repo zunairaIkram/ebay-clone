@@ -1,125 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Allbirds: Women's Shoes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collectible Card Games in Game:Star Wars CCG|Star Wars TCG</title>
     <style>
-        html, body {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Geograph", "Arial", sans-serif;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            margin: 0;
-            padding: 0;
-            font-family: "Geograph", "Arial", sans-serif;
         }
 
-        .notification-bar {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+
+        /* Topmost Bar */
+        .top-bar {
+            background-color: white;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .top-bar .left-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .left-links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .left-links a:hover {
+            color: #0059b3;
+        }
+
+        .top-bar .right-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .right-links a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .right-links a:hover {
+            color: #0059b3;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid transparent white;
+        }
+
+        .navbar .logo img {
             height: 40px;
-            background-color: #512f35;
-            color: #ece8e9;
-            text-align: center;
-            font-size: xx-small;
-            display: flex;
-            justify-content: center;       /*horizontally centres */
-            align-items: center;           /*vertically centres */
         }
 
-        .header-section {
+        .navbar .search-bar {
+            display: flex;
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            font-size: 16px;
+            background-color: #0059b3;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #0059b3;
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            margin: 15px 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: #0059b3;
+            margin-right: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #333;
+        }
+
+        .breadcrumb span {
+            margin-right: 5px;
+        }
+
+        /* Main Heading */
+        .main-heading {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 20px;
+        }
+
+        /* Content Wrapper: Sidebar + Main Content */
+        .content-wrapper {
+            display: flex;
+            margin: 20px;
+        }
+
+        /* Category Sidebar */
+        .category-sidebar {
+            width: 205px;
+            padding: 0px;
+            background-color: white;
+            margin-right: 20px;
+        }
+
+        .category-sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .category-sidebar h5 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            margin-top: 25px;
+        }
+
+        .category-sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .category-sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .category-sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .category-sidebar ul li a:hover {
+            color: #0059b3;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 0px;
+            background-color: white;
+        }
+
+        /* Filter Bar */
+        .filter-bar-wrapper {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .filter-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 40px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #ece8e9;
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+            border-bottom: none;
         }
 
-        /* Logo styling */
-        .header-section .logo h1 {
-            font-size: 24px;
-            color: #000;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        /* Navigation links styling */
-        .header-section .navigation {
+        .filter-bar .filter-tabs {
             display: flex;
-            gap: 30px;
-        }
-
-        .header-section .navigation a {
-            text-decoration: none;
-            font-size: 14px;
-            color: #000;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        /* Header icons styling */
-        .header-section .header-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .header-section .header-icons a {
-            text-decoration: none;
-            font-size: 14px;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .home_bar {
-            background-color: #ffffff;
-            padding: 30px 25px;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
         }
-        .home_bar .home {
-            color: #000;
-            font-size: small;
+
+        .filter-tabs button {
+            background-color: white;
+            border: 1px solid transparent;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .filter-tabs button:hover {
+            background-color: #f5f5f5;
+            border-color: transparent;
+        }
+
+        .filter-tabs button.active {
+            background-color: #0059b3;
+            color: white;
+            border-color: transparent;
+        }
+
+        .filter-options {
             display: flex;
-            align-items: baseline;
-            
-        }
-        .home_bar .gender {
-            color: #000;
-            font-size: small;
-
+            align-items: center;
+            gap: 15px;
         }
 
+        .filter-options span {
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .filter-options span:hover {
+            color: #0059b3;
+        }
+
+        .filter-options img {
+            height: 20px;
+            width: 20px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .filter-options img:hover {
+            opacity: 0.7;
+        }
+
+        .results-count {
+            font-size: 14px;
+            color: #333;
+            margin-top: 10px;
+            padding-left: 0px; /* Moves the text below All Listings */
+            display: flex;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd; /* Only keep the bottom border */
+        }
+
+        /* Filter Tags */
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .filter-tag {
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .filter-tag span {
+            margin-right: 8px;
+        }
+
+        .filter-tag img {
+            height: 16px;
+            width: 16px;
+            cursor: pointer;
+        }
+
+        .filter-tag img:hover {
+            opacity: 0.7;
+        }
+
+        /* All Filters Button */
+        .all-filters {
+            margin-bottom: 15px;
+        }
+
+        .all-filters button {
+            background-color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .all-filters button:hover {
+            color: grey;
+        }
+
+        .all-filters-wrapper {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <section class="notification-bar">
-        <h3>Free Shipping on Orders Over $75. Free Returns.</h3>
-    </section>
-    <section class="header-section">
-        <nav class="navigation">
-            <a href="#">Men</a>
-            <a href="#">Women</a>
-            <a href="#">Socks</a>
-            <a href="#">Sale</a>
-        </nav>
-        <div class="logo"></div>
-            <h1>allbirds</h1> 
+
+    <!-- Topmost Bar -->
+    <div class="top-bar">
+        <div class="left-links">
+            <span>Hi Zunaira!</span>
+            <a href="#">Daily Deals</a>
+            <a href="#">Brand Outlet</a>
+            <a href="#">Gift Cards</a>
+            <a href="#">Help & Contact</a>
         </div>
-        <div class="header-icons">
-            <a href="#">SUSTAINABILITY</a> 
-            <a href="#">RETURN</a> 
-            <a href="#">STORES</a> 
+        <div class="right-links">
+            <a href="#">Sell</a>
+            <a href="#">Watchlist</a>
+            <a href="#">My eBay</a>
         </div>
-    </section>
-    <section>
-        <div class="home_bar">
-            <a href="#" class="home">Home/</a>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <!-- Logo Section -->
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/EBay_logo.svg/1920px-EBay_logo.svg.png" alt="eBay Logo">
         </div>
-        <div class="home_bar"></div>
-            <a href="#" class="gender">Women Men/</a>
+
+        <!-- Search Bar Section -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search for anything">
+            <button type="submit">Search</button>
         </div>
-    </section>
-    
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="#">All Categories</a>
+            <a href="#">Advanced</a>
+        </div>
+    </div>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+        <a href="#">eBay</a>
+        <span>></span>
+        <a href="#">Toys & Hobbies</a>
+        <span>></span>
+        <span>Collectible Card Games</span>
+    </div>
+
+    <!-- Main Heading -->
+    <div class="main-heading">
+        Collectible Card Games
+    </div>
+
+    <!-- Content Wrapper: Sidebar + Main Content -->
+    <div class="content-wrapper">
+        <!-- Category Sidebar -->
+        <div class="category-sidebar">
+            <h3>Shop by Category</h3>
+            <ul>
+                <li><a href="#">Toys & Hobbies</a></li>
+            </ul>
+            <h5>Collectible Card Games</h5>
+            <ul>
+                <li><a href="#">CCG Individual Cards</a></li>
+                <li><a href="#">CCG Sealed Packs</a></li>
+                <li><a href="#">CCG Sealed Boxes</a></li>
+                <li><a href="#">CCG Sealed Cases</a></li>
+                <li><a href="#">CCG Sealed Decks & Kits</a></li>
+                <li><a href="#">CCG NFTs</a></li>
+                <li><a href="#">CCG Box & Case Breaks</a></li>
+                <li><a href="#">CCG Player-Built Decks</a></li>
+                <li><a href="#">CCG Sets</a></li>
+                <li><a href="#">CCG Mixed Card Lots</a></li>
+                <li><a href="#">CCG Supplies & Accessories</a></li>
+                <li><a href="#">CCG Price Guides & Publications</a></li>
+                <li><a href="#">Other CCG Items</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="filter-bar-wrapper">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="active">All Listings</button>
+                        <button>Auction</button>
+                        <button>Buy It Now</button>
+                    </div>
+                    <div class="filter-options">
+                        <span>Best Match</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/709/709580.png" alt="Grid View">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149127.png" alt="List View">
+                    </div>
+                </div>
+                <!-- Results Count -->
+                <div class="results-count">
+                    76,281 Results
+                </div>
+            </div>
+
+            <!-- Filter Tags Bar -->
+            <div class="filter-tags">
+                <div class="filter-tag">
+                    <span>5 filters applied</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Game</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Language</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Set</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Year Manufactured</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Manufacturer</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Condition</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Price</span>
+                </div>
+                <div class="filter-tag">
+                    <span>Buying Format</span>
+                </div>
+            </div>
+
+            <!-- All Filters Button -->
+            <div class="all-filters-wrapper">
+                <div class="all-filters">
+                    <button>All Filters</button>
+                </div>
+            </div>
+
+            <!-- Placeholder content -->
+            <p>Main content area where product listings or other information will be displayed.</p>
+        </div>
+    </div>
+
 </body>
 </html>
